@@ -8,7 +8,7 @@
     <string name="dummySectionText">Section:\t\t</string>
     <string name="dummyUrlText">URL(s):\t\t</string>
 
-    <string name="no_news">Sorry no news today</string>
+    <string name="no_news">Sorry no articles with these search criteria.\nPlease use specific keywords in Settings menu.</string>
 
     <string name="no_internet_connection">No internet connection detected</string>
 

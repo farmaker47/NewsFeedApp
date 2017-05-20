@@ -43,8 +43,20 @@
                 android:id="@+id/empty_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:textAppearance="?android:textAppearanceMedium" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/emtpyTextView"
+                android:textAlignment="center"
+                android:textAppearance="?android:textAppearanceMedium"
+                tools:text="@string/no_news" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/imageViewHeight"
+                android:layout_below="@id/empty_view"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/imageViewMargin"
+                android:src="@drawable/gardianimage" />
 
             <!-- Loading indicator is only shown before the first load -->
             <ProgressBar
@@ -52,7 +64,9 @@
                 style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/progressBar" />
+
 
         </RelativeLayout>
     </LinearLayout>

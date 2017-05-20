@@ -10,14 +10,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,12 +28,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private NewAdapter mAdapter;
 
     private TextView mEmptyStateTextView;
+    private ImageView mImageView;
 
     private static final int NEWS_LOADER_ID = 1;
 
     /*private static final String GARD_REQUEST_URL =
             "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-01-01&endtime=2017-01-31";*/
-    private static final String GARD_REQUEST_URL ="http://content.guardianapis.com/search?api-key=test";
+    private static final String GARD_REQUEST_URL = "http://content.guardianapis.com/search?api-key=test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        mImageView = (ImageView)findViewById(R.id.imageView);
+        mImageView.setVisibility(View.GONE);
+
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         // Get details on the currently active default da
@@ -63,23 +68,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection);
+            mImageView.setVisibility(View.VISIBLE);
         }
 
 
         // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        ListView newsListView = (ListView) findViewById(R.id.list);
 
-        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        earthquakeListView.setEmptyView(mEmptyStateTextView);
+
+        newsListView.setEmptyView(mEmptyStateTextView);
 
         // Create a new {@link ArrayAdapter} of earthquakes
         mAdapter = new NewAdapter(this, new ArrayList<New>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(mAdapter);
+        newsListView.setAdapter(mAdapter);
 
-        earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 New currentCurrentNew = mAdapter.getItem(position);
@@ -95,8 +101,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
 
         });
-
-
     }
 
     @Override
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent settings = new Intent(MainActivity.this,SettingsActivity.class);
+            Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settings);
             return true;
         }
@@ -134,18 +138,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 getString(R.string.settings_order_by_default));
         Uri baseUri = Uri.parse(GARD_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        //http://content.guardianapis.com/search?order-by=newest&q=deadpool&api-key=test
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("q", searchWord);
 
-        /*//query?format=geojson&starttime=2016-01-01&endtime=2016-01-31&minmag=6&limit=10
-        uriBuilder.appendQueryParameter("format", "geojson");
-        uriBuilder.appendQueryParameter("limit", "10");
-        uriBuilder.appendQueryParameter("minmag", minMagnitude);
-       uriBuilder.appendQueryParameter("starttime", "2016-01-01");
-        uriBuilder.appendQueryParameter("endtime", "2016-01-31");
-        *//*uriBuilder.toString()goes down*/
-        return new NewsLoader(this,uriBuilder.toString());
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -156,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Set empty state text to display "No earthquakes found."
         mEmptyStateTextView.setText(R.string.no_news);
+        mImageView.setVisibility(View.VISIBLE);
 
         // Clear the adapter of previous earthquake data
         mAdapter.clear();
@@ -163,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (news != null && !news.isEmpty()) {
+            mImageView.setVisibility(View.GONE);
             mAdapter.addAll(news);
         }
 

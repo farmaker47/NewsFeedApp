@@ -42,17 +42,11 @@ public class NewAdapter extends ArrayAdapter<New> {
         TextView sectionTextView = (TextView) listItemView.findViewById(R.id.sectionText);
         sectionTextView.setText(currentNew.getmSection());
 
-        TextView urlTextView = (TextView) listItemView.findViewById(R.id.urlText);
-        urlTextView.setText(currentNew.getmUrl());
-
         TextView dummyTitleText = (TextView) listItemView.findViewById(R.id.dummyTitleText);
         dummyTitleText.setText(mContext.getResources().getString(R.string.dummyTitleText));
 
         TextView dummySectionText = (TextView) listItemView.findViewById(R.id.dummySectionText);
         dummySectionText.setText(mContext.getResources().getString(R.string.dummySectionText));
-
-        TextView dummyUrlText = (TextView) listItemView.findViewById(R.id.dummyUrlText);
-        dummyUrlText.setText(mContext.getResources().getString(R.string.dummyUrlText));
 
         return listItemView;
     }

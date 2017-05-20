@@ -2,5 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="emtpyTextView">70dp</dimen>
+    <dimen name="progressBar">250dp</dimen>
+    <dimen name="imageViewMargin">15dp</dimen>
+    <dimen name="imageViewHeight">250dp</dimen>
 </resources>
