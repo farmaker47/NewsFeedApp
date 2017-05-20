@@ -34,17 +34,15 @@ public class NewAdapter extends ArrayAdapter<New> {
         }
         //Get the object located at this position in the list
         New currentNew = getItem(position);
-        //Below we find the TextViews in the list_item.xml layout with specficthe IDs.
+        //Below we find the TextViews in the news_list_item.xml layout with specfic IDs.
         //Then we set the spesific text for each TextView
         TextView titleTextView = (TextView) listItemView.findViewById(R.id.titleText);
         titleTextView.setText(currentNew.getmTitle());
-
         TextView sectionTextView = (TextView) listItemView.findViewById(R.id.sectionText);
         sectionTextView.setText(currentNew.getmSection());
 
         TextView dummyTitleText = (TextView) listItemView.findViewById(R.id.dummyTitleText);
         dummyTitleText.setText(mContext.getResources().getString(R.string.dummyTitleText));
-
         TextView dummySectionText = (TextView) listItemView.findViewById(R.id.dummySectionText);
         dummySectionText.setText(mContext.getResources().getString(R.string.dummySectionText));
 

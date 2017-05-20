@@ -49,6 +49,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 tools:text="@string/no_news" />
 
+            <!-- this Image view is shown only when there is no data or internet cnnection-->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
@@ -67,9 +68,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/progressBar" />
 
-
         </RelativeLayout>
     </LinearLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>

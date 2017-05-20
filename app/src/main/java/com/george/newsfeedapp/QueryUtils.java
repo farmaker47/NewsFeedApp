@@ -19,13 +19,15 @@ import java.util.List;
 
 
 /**
- * Helper methods related to requesting and receiving earthquake data from USGS.
+ * Helper methods related to requesting and receiving news data from Gurdian API.
  */
 public final class QueryUtils {
+
+    //Creating a final string to use it as a log tag
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
-     * Sample JSON response for a USGS query
+     * Sample JSON response for a news query
      */
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -42,10 +44,10 @@ public final class QueryUtils {
 
     public static List<New> fetchNewsData(String requestUrl) {
 
-        //to see the progress bar we make it sleep for 2 seconds
+        //to see the progress bar we make it sleep for 1 second
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,7 +64,7 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        // Extract relevant fields from the JSON response and create a list of Newss
         List<New> news = null;
         try {
             news = extractFeatureFromJson(jsonResponse);
@@ -70,7 +72,7 @@ public final class QueryUtils {
             e.printStackTrace();
         }
 
-        // Return the list of {@link Earthquake}s
+        // Return the list of News
         return news;
     }
 
@@ -113,10 +115,10 @@ public final class QueryUtils {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
-                Log.v(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.v(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the GuardianAPI JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -149,12 +151,9 @@ public final class QueryUtils {
         return output.toString();
     }
 
-
-
     private static List<New> extractFeatureFromJson(String earthquakeJSON) throws JSONException {
 
-
-        // Create an empty ArrayList that we can start adding earthquakes to
+        // Create an empty ArrayList that we can start adding news to
         List<New> news = new ArrayList<>();
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
@@ -166,17 +165,17 @@ public final class QueryUtils {
             JSONArray results = response.getJSONArray("results");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject r = results.getJSONObject(i);
-                // Extract the value for the key called "mag"
+                // Extract the value for the key called "title"
                 String title = r.getString("webTitle");
-                // Extract the value for the key called "place"
+                // Extract the value for the key called "section"
                 String section = r.getString("sectionName");
                 // Extract the value for the key called "url"
                 String url = r.getString("webUrl");
-                // Create a new {@link Earthquake} object with the magnitude, location, time,
+                // Create a new {@link New} object with the title, section, url,
                 // and url from the JSON response.
                 New newss = new New(title, section, url);
 
-                // Add the new {@link Earthquake} to the list of earthquakes.
+                // Add the new {@link New} to the list of news.
                 news.add(newss);
             }
 
@@ -186,12 +185,11 @@ public final class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 
         // Return the list of earthquakes
         return news;
     }
-
 
 }

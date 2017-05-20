@@ -25,15 +25,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<New>> {
 
-    private NewAdapter mAdapter;
-
+    //Initializing the views
     private TextView mEmptyStateTextView;
     private ImageView mImageView;
-
+    //Initializing the custom adapter
+    private NewAdapter mAdapter;
+    //Giving value to the loader
     private static final int NEWS_LOADER_ID = 1;
-
-    /*private static final String GARD_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2017-01-01&endtime=2017-01-31";*/
+    //making the string final so to build the final url with the uribuilder
     private static final String GARD_REQUEST_URL = "http://content.guardianapis.com/search?api-key=test";
 
     @Override
@@ -42,14 +41,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Finding,casting and storing the views to the variables
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        mImageView = (ImageView)findViewById(R.id.imageView);
+        mImageView = (ImageView) findViewById(R.id.imageView);
+        //when app starts imageview is set to GONE
         mImageView.setVisibility(View.GONE);
-
-
+        //Checking the network state
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default da
+        // Get details on the currently active default data
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -68,34 +67,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection);
+            //Also set imageview to visible
             mImageView.setVisibility(View.VISIBLE);
         }
 
-
         // Find a reference to the {@link ListView} in the layout
         ListView newsListView = (ListView) findViewById(R.id.list);
-
-
         newsListView.setEmptyView(mEmptyStateTextView);
 
-        // Create a new {@link ArrayAdapter} of earthquakes
+        // Create a new {@link ArrayAdapter} of news
         mAdapter = new NewAdapter(this, new ArrayList<New>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         newsListView.setAdapter(mAdapter);
-
+        //Setting the listener so upon list item click the user can open the web page in the browser
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 New currentCurrentNew = mAdapter.getItem(position);
-
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri newsUri = Uri.parse(currentCurrentNew.getmUrl());
-
                 // Create a new intent to view the earthquake URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
-
                 // Send the intent to launch a new activity
                 startActivity(websiteIntent);
             }
@@ -117,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Upon Setings button click we are transfered to the Settings Activity
         if (id == R.id.action_settings) {
             Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settings);
@@ -129,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<New>> onCreateLoader(int i, Bundle bundle) {
+        //Here we get the preferences and creating Strings which will be used to build the final URL
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String searchWord = sharedPrefs.getString(
                 getString(R.string.settings_search_key),
@@ -146,18 +141,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<New>> loader, List<New> news) {
-
+        //Setting the progress bar to GONE onfinish loading
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No earthquakes found."
+        // Set empty state text to display no articlesfound
         mEmptyStateTextView.setText(R.string.no_news);
         mImageView.setVisibility(View.VISIBLE);
 
-        // Clear the adapter of previous earthquake data
+        // Clear the adapter of previous news data
         mAdapter.clear();
 
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // If there is a valid list of News, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (news != null && !news.isEmpty()) {
             mImageView.setVisibility(View.GONE);

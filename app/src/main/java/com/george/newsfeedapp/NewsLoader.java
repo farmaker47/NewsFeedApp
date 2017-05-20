@@ -12,6 +12,7 @@ public class NewsLoader extends AsyncTaskLoader<List<New>> {
     /** Query URL */
     private String mUrl;
 
+    //Constructor for the NewsLoader
     public NewsLoader(Context context, String url) {
         super(context);
         mUrl = url;
@@ -22,6 +23,7 @@ public class NewsLoader extends AsyncTaskLoader<List<New>> {
         forceLoad();
     }
 
+    //This is on a background thread.
     @Override
     public List<New> loadInBackground() {
         if (mUrl == null) {
