@@ -151,7 +151,7 @@ public final class QueryUtils {
         return output.toString();
     }
 
-    private static List<New> extractFeatureFromJson(String earthquakeJSON) throws JSONException {
+    private static List<New> extractFeatureFromJson(String newsJSON) throws JSONException {
 
         // Create an empty ArrayList that we can start adding news to
         List<New> news = new ArrayList<>();
@@ -160,7 +160,7 @@ public final class QueryUtils {
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
-            JSONObject root = new JSONObject(earthquakeJSON);
+            JSONObject root = new JSONObject(newsJSON);
             JSONObject response = root.getJSONObject("response");
             JSONArray results = response.getJSONArray("results");
             for (int i = 0; i < results.length(); i++) {
@@ -183,7 +183,7 @@ public final class QueryUtils {
                 news.add(newss);
             }
 
-            // build up a list of Earthquake objects with the corresponding data.
+            // build up a list of news objects with the corresponding data.
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
@@ -192,7 +192,7 @@ public final class QueryUtils {
             Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of news
         return news;
     }
 
