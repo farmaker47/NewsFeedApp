@@ -13,6 +13,15 @@ public class New {
     private String mUrl;
     //Variable to store the thumbnails url
     private String mUrlThumbnail;
+//    //Creating an empty constructor for
+//    There are three common reasons to define a default constructor:
+//
+//    To construct an object with default values.
+//    To initialize an object that doesn't need parameters in that initialization process.
+//    To redefine the scope of the constructor. Making the constructor private will prevent anyone but the class itself from constructing an object.
+    private New(){
+
+    }
     //Creating the constructor of 4 Strings
     public New (String title,String section,String url,String urlthumbnail){
         mTitle = title;
