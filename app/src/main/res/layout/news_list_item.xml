@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:drawable/dialog_holo_light_frame"
-
     android:orientation="vertical">
 
     <FrameLayout
@@ -17,7 +16,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="@dimen/webView"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:longClickable="false" />
+
             <LinearLayout
+                android:id="@+id/linearTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -34,8 +44,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/linearTitle"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView

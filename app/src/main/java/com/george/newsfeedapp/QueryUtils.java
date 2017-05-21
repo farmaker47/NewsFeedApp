@@ -171,9 +171,13 @@ public final class QueryUtils {
                 String section = r.getString("sectionName");
                 // Extract the value for the key called "url"
                 String url = r.getString("webUrl");
+                // Extract the thumbnail's url
+                JSONObject fields = r.getJSONObject("fields");
+                String urlThumbnail = fields.getString("thumbnail");
+
                 // Create a new {@link New} object with the title, section, url,
                 // and url from the JSON response.
-                New newss = new New(title, section, url);
+                New newss = new New(title, section, url,urlThumbnail);
 
                 // Add the new {@link New} to the list of news.
                 news.add(newss);

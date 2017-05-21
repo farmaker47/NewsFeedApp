@@ -11,11 +11,14 @@ public class New {
     private String mSection;
     //Variable to store the url's name
     private String mUrl;
-    //Creating the constructor of 3 Sstrings
-    public New (String title,String section,String url){
+    //Variable to store the thumbnails url
+    private String mUrlThumbnail;
+    //Creating the constructor of 4 Strings
+    public New (String title,String section,String url,String urlthumbnail){
         mTitle = title;
         mSection = section;
         mUrl = url;
+        mUrlThumbnail = urlthumbnail;
     }
 
     //Creating the getter methods to use them in the custom adapter
@@ -27,5 +30,8 @@ public class New {
     }
     public String getmSection(){
         return mSection;
+    }
+    public String getmUrlThumbnail(){
+        return mUrlThumbnail;
     }
 }

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //Giving value to the loader
     private static final int NEWS_LOADER_ID = 1;
     //making the string final so to build the final url with the uribuilder
-    private static final String GARD_REQUEST_URL = "http://content.guardianapis.com/search?api-key=test";
+    private static final String GARD_REQUEST_URL = "http://content.guardianapis.com/search?api-key=test&show-fields=thumbnail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +41,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         //Finding,casting and storing the views to the variables
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         mImageView = (ImageView) findViewById(R.id.imageView);
+
         //when app starts imageview is set to GONE
         mImageView.setVisibility(View.GONE);
         //Checking the network state
@@ -165,4 +167,5 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<New>> loader) {
         mAdapter.clear();
     }
+
 }

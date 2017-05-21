@@ -21,14 +21,14 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
-
+            //finding the preferences with specific keys
+            //and binding preference summary to value
             Preference searchWord = findPreference(getString(R.string.settings_search_key));
             bindPreferenceSummaryToValue(searchWord);
-
             Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
             bindPreferenceSummaryToValue(orderBy);
         }
-
+        //Method for binding preference summary to value
         private void bindPreferenceSummaryToValue(Preference preference) {
             preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(preference.getContext());
@@ -51,7 +51,5 @@ public class SettingsActivity extends AppCompatActivity {
             }
             return true;
         }
-
-
     }
 }

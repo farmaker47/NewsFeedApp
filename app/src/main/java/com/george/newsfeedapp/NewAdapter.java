@@ -1,11 +1,15 @@
 package com.george.newsfeedapp;
 
 import android.content.Context;
+
 import android.support.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -46,6 +50,14 @@ public class NewAdapter extends ArrayAdapter<New> {
         TextView dummySectionText = (TextView) listItemView.findViewById(R.id.dummySectionText);
         dummySectionText.setText(mContext.getResources().getString(R.string.dummySectionText));
 
+        WebView webView = (WebView)listItemView.findViewById(R.id.webView);
+        //Use the below methods to zoom out the view and fit it inside the webView
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        //load the thumbnailurl to the webview
+        webView.loadUrl(currentNew.getmUrlThumbnail());
+
         return listItemView;
     }
+
 }

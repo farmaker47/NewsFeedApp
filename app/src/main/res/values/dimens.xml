@@ -6,4 +6,5 @@
     <dimen name="progressBar">250dp</dimen>
     <dimen name="imageViewMargin">15dp</dimen>
     <dimen name="imageViewHeight">250dp</dimen>
+    <dimen name="webView">100dp</dimen>
 </resources>
